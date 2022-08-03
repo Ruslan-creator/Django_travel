@@ -1,0 +1,71 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+
+{% block content %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark ;" >
+    <form class="amm-custom-form" method="get" action="{% url 'acc:index' %}" style="width: 400; ">
+            <div class="ammo-combo-part">
+
+                <div class="row justify-content-around">
+                    <div class="col-4">
+                        <input id="q-search" class="form-control mr-sm-1 "
+                        type="search" placeholder="Поиск по городу" aria-label="Search"
+                        name="q" style="width: 200px;">
+                    </div>
+                    <div class="col-4">
+                        <button id="search-btn" class="btn btn-outline-danger my-2 my-sm-0 disabled" style="color: #fff;"
+                        type="submit">Поиск</button>
+                    </div>
+                </div>
+
+                <div class="ammo-query">
+                    <div class="star-rating">
+                        <div>
+                            <p class="title">Рейтинг</p>
+                            <div class="star-list">
+                                <span data-star="1" class="sltru-start">1★</span>
+                                <span data-star="2" class="sltru-start">2★</span>
+                                <span data-star="3" class="sltru-start">3★</span>
+                                <span data-star="4" class="sltru-start">4★</span>
+                                <span data-star="5" class="sltru-start">5★</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amm-slider-range">
+                        <input type="hidden" class="range-slider" value="10000" />
+                    </div>
+                </div>
+
+            </div>
+
+            <input  id="low_price" type="hidden" name="price__lte" placeholder="минимальная цена">
+            <input id="high_price" type="hidden" name="price__gte" placeholder="максимальная цена">
+            <input id="rating" type="hidden" name="rating" placeholder="рейтинг" value="">
+
+
+        </form>
+ </nav>
+    <div class="container mt-3">
+        <div class="row centered" >
+            {% for offer in list_of_accommodations %}
+                <div class="card  col-lg-4" style="width: 16rem;
+                display: flex;">
+                    <div style="margin-left: 0%;margin-right: +5%; margin-top: 5%;">
+                        <img src="/media/{{ offer.image }}"
+                         class="card-img-top filters__img" alt="..." >
+                    </div>
+                    <div class="card-body fa fa-align-justify">
+                        <h5 class="card-title">{{ offer.name|title }} <span class="accommodations-star-rating">{{offer.rating}}★</span></h5>
+                        <p class="card-text">{{ offer.region|title }}</p>
+                        <p class="card-text">{{ offer.price }} руб. за сутки</p>
+                        <a href="{% url 'acc:accommodation' offer.pk %}"
+                           class="btn btn-danger">Подробнее</a>
+                    </div>
+                </div>
+                {% empty %}
+                    <div class="empty-accommodations">Вариантов размещения не найдено</div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+

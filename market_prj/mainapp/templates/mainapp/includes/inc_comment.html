@@ -1,0 +1,68 @@
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+<br><br><br>
+
+<style>
+.img-sm {
+ width: 46px;
+ height: 46px;
+}
+</style>
+
+<section class="container">
+<div class="row">
+
+<div class="col-md-12">
+<div class="panel">
+ <div class="panel-body">
+  {{ comment }}
+  <br>
+
+ <div class="mar-top clearfix">
+<form action="." method="POST" enctype="multipart/form-data">
+
+    {% csrf_token %}
+   <!--  {{ comment_form.as_p }}  -->
+ <textarea class="form-control" rows="2" placeholder="Добавьте Ваш отзыв" name="text" id="text"></textarea>
+
+ <input  type="hidden" name="accommodation_id" id="accommodation_id" value="{{ pk }}"/>
+<input  type="hidden" name="travel_user_profile_id" id="travel_user_profile_id" value="{{ request.user.id }}"/>
+ <input  type="hidden" name="travel_user_id" id="travel_user_id" value="{{ request.user.traveluserprofile.id }}"/>
+   <br>
+    <button class="btn btn-sm btn-primary pull-right" type="submit", name="send_comment"><i class="fa fa-pencil fa-fw"></i> Добавить отзыв
+
+    </button>
+</form>
+
+ </div>
+ </div>
+</div>
+<div class="panel">
+ <div class="panel-body">
+ <!-- Содержание Новостей -->
+ <!--===================================================-->
+  {% for comment in comments %}
+ <div class="media-block">
+ <a class="media-left" href="#"><img class="img-circle img-sm" alt="Профиль пользователя" src="https://bootstraptema.ru/snippets/icons/2016/mia/1.png"></a>
+ <div class="media-body">
+ <div class="mar-btm">
+ <a href="#" class="btn-link text-semibold media-heading box-inline">{{ comment.travel_user_id }}</a>
+ <p class="text-muted text-sm"><i class="fa fa-mobile fa-lg"></i> - {{ comment.date }} </p>
+ </div>
+ <p> {{ comment.text }} </p>
+  <!--
+  <div class="pad-ver">
+ <div class="btn-group">
+ <a class="btn btn-sm btn-default btn-hover-success" href="#"><i class="fa fa-thumbs-up"></i></a>
+ <a class="btn btn-sm btn-default btn-hover-danger" href="#"><i class="fa fa-thumbs-down"></i></a>
+ </div>
+ </div>
+ -->
+ <hr>
+ </div>
+  {% endfor %}
+</div>
+</div>
+</div>
+</div>
